@@ -1,0 +1,8 @@
+<launch>
+
+    <node pkg="icp_registration" type="icp_node_test4_1" name="icp_node_test4_1" output="screen">
+        <rosparam file="$(find icp_registration)/config/icp.yaml" command="load"/>
+
+    </node>
+    
+</launch>

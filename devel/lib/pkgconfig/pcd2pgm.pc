@@ -1,0 +1,8 @@
+prefix=/home/hj/sentry_ros_25/devel
+
+Name: pcd2pgm
+Description: Description of pcd2pgm
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

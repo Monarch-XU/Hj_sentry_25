@@ -1,0 +1,25 @@
+use_sim_time: false 
+rough_leaf_size: 0.3
+refine_leaf_size: 0.2
+pcd_path: "/home/hj/sentry_ros_25/PCD/205_outside.pcd"
+map_frame_id: "map"
+odom_frame_id: "odom_icp"
+laser_frame_id: "livox_frame" # livox_frame
+pointcloud_topic: "/livox/points"
+initialpose_topic: "/initialpose_pub"
+range_odom_frame_id: "map"
+thresh: 0.2
+xy_offset: 0.2
+yaw_offset: 30.0
+yaw_resolution: 10.0
+initial_pose: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # x,y,z,roll,pitch,yaw
+rotating_pointcloud: [1, 0, 0, 0,
+                      0,-1, 0, 0,
+                      0, 0,-1, 0,
+                      0, 0, 0, 1]
+rough_iter_: 20
+refine_iter_: 18
+
+SINGLE_RUN: 0 # 单次运行调试标识符，1为只运行一次，0为正常状态的多次连续运行
+
+frame_num: 3

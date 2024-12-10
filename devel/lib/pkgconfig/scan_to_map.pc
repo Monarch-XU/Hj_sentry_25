@@ -1,0 +1,8 @@
+prefix=/home/hj/sentry_ros_25/devel
+
+Name: scan_to_map
+Description: Description of scan_to_map
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

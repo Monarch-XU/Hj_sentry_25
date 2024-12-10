@@ -1,0 +1,36 @@
+<launch>
+    <include file="$(find simple_robot)/launch/robot.launch"/>
+
+    <!-- 雷达设置 -->
+    <include file="$(find point_lio)/launch/mapping_mid360.launch"/>
+    <node pkg="livox_to_pointcloud2" type="livox_to_pointcloud2_node" name="livox_to_pointcloud2_node" output="screen" >
+    <remap from="/livox/lidar" to="/livox/lidar_192_168_1_3" />
+    </node>
+    <node name='pointcloud_filter' pkg="sentry_navigation" type="pointcloud2_filter"/>
+
+    <!-- 点云分割 -->
+    <include file="$(find linefit_ground_segmentation_ros)/launch/segmentation.launch"/>
+
+    <!-- 三维点云转二维 -->
+    <include file="$(find pointcloud_to_laserscan)/launch/sample_node.launch"/>
+
+    <!-- 启动重定位 -->
+    <include file="$(find auto_nav)/launch/navi_simple_meca_car_pid.launch"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_red_to_camera_init" args="0 0 0 0 0 0 map camera_init 100" />
+    <!--当需要固定里程计坐标系到地图坐标系调试时，进行该launch-->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="static_base_link_to_base_link_icp" args="0 0 0 0 0 90 base_link base_link_icp 100" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="static_map_to_odom_icp" args="0 0 0 0 0 0 map odom_icp 100" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="static_odom_icp_to_odom" args="0 0 0 0 0 0 odom_icp odom 100" /> -->
+
+    <node name='odom_trans' pkg="sentry_navigation" type="odom_transform"/>
+
+    <include file="$(find sentry_navigation)/launch/robot_model_visualization.launch"/>
+    <!--尝试一下禁用激光里程计维护odom到basefootprint的变换，激光里程计只用于ekf融合-->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="static_odom_to_base_footprint" args="0 0 0 0 0 0 odom base_footprint 100" /> -->
+
+    <!--启动导航框架 -->
+    <include file="$(find sentry_navigation)/launch/move_base.launch"/>
+    <include file="$(find sentry_navigation)/launch/local_plan.launch"/>
+
+</launch>
